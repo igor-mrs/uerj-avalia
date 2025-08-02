@@ -9,7 +9,8 @@ const sanitizeString = (str: string): string => {
 
 const sanitizeEmail = (email: string): string => {
   if (typeof email !== 'string') return ''
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  // Regex mais simples e prática para emails
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   const cleaned = email.trim().toLowerCase()
   return emailRegex.test(cleaned) ? cleaned : ''
 }
@@ -627,10 +628,10 @@ export async function createProfessor(nome: string, email?: string): Promise<Pro
     }
 
     let emailClean: string | undefined
-    if (email) {
+    if (email && email.trim()) {
       emailClean = sanitizeEmail(email)
-      if (email && !emailClean) {
-        throw new Error('Email inválido')
+      if (!emailClean) {
+        throw new Error(`Email inválido: "${email}". Use um formato válido como: nome@dominio.com`)
       }
     }
 
