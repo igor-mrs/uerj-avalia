@@ -91,4 +91,4 @@ Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Desenvolvedor
 
-Desenvolvido por Igor Moreira para a UERJ.
+Desenvolvido por Igor Morais do Amaral para a UERJ.
