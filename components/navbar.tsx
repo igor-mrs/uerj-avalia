@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/use-auth'
-import { LogOut, User, Bug } from 'lucide-react'
+import { LogOut, User, Bug, Menu, Home } from 'lucide-react'
 import { useState } from 'react'
 import { SimpleModal } from "@/components/ui/simple-modal"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { createFeedback } from '@/lib/database'
 import { useToast } from '@/hooks/use-toast'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const { user, loading, signOut, isAuthenticated } = useAuth()
@@ -133,10 +140,55 @@ export function Navbar() {
               </Link>
             )}
             
+            {/* Menu móvel */}
             <div className="md:hidden">
-              <Button variant="ghost" size="sm">
-                Menu
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                    <Menu className="h-4 w-4" />
+                    <span className="sr-only">Menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem asChild>
+                    <Link href="/" className="flex items-center gap-2">
+                      <Home className="h-4 w-4" />
+                      Início
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowFeedbackModal(true)}>
+                    <Bug className="h-4 w-4 mr-2" />
+                    Reportar Erro
+                  </DropdownMenuItem>
+                  
+                  {isAuthenticated && user ? (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem disabled className="flex items-center gap-2">
+                        <User className="h-4 w-4" />
+                        {user.email?.split('@')[0]}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 text-red-600"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sair
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link href="/login" className="flex items-center gap-2">
+                          <User className="h-4 w-4" />
+                          Entrar
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
