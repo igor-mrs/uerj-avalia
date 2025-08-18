@@ -2,6 +2,10 @@
 
 Sistema de avaliação de professores da Universidade do Estado do Rio de Janeiro (UERJ).
 
+## Acesse agora
+
+https://avalia-eng-uerj.vercel.app/
+
 ## 🚀 Tecnologias
 
 - **Next.js 15** - Framework React
